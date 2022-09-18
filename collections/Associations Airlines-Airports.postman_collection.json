@@ -1,0 +1,386 @@
+{
+	"info": {
+		"_postman_id": "8e8e27c9-f8d4-4aef-96ca-219c16313b48",
+		"name": "Associations Airlines-Airports",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12453070"
+	},
+	"item": [
+		{
+			"name": "Add Airport to Airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseProtocol}}://{{baseURL}}:{{basePort}}/api/{{apiVersion}}/airlines/{{airline_id}}/airports/{{airport_id}}",
+					"protocol": "{{baseProtocol}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"airlines",
+						"{{airline_id}}",
+						"airports",
+						"{{airport_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add unexisting airport to airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The airport with id 4928d12f-1cb4-4d47-b848-65781876b80c has not been found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseProtocol}}://{{baseURL}}:{{basePort}}/api/{{apiVersion}}/airlines/{{airline_id}}/airports/4928d12f-1cb4-4d47-b848-65781876b80c",
+					"protocol": "{{baseProtocol}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"airlines",
+						"{{airline_id}}",
+						"airports",
+						"4928d12f-1cb4-4d47-b848-65781876b80c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Airports from Airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of airports > ' + 0, function () {",
+							"   var data = pm.response.json()",
+							"   pm.expect(data.length).to.greaterThan(0)",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseProtocol}}://{{baseURL}}:{{basePort}}/api/{{apiVersion}}/airlines/{{airline_id}}/airports",
+					"protocol": "{{baseProtocol}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"airlines",
+						"{{airline_id}}",
+						"airports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Airport from Airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseProtocol}}://{{baseURL}}:{{basePort}}/api/{{apiVersion}}/airports/{{airport_id}}",
+					"protocol": "{{baseProtocol}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"airports",
+						"{{airport_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Airport from Airline with no association",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseProtocol}}://{{baseURL}}:{{basePort}}/api/{{apiVersion}}/airlines/{{airline_id}}/airports/5932764a-8586-4b62-94dd-86b39972472a",
+					"protocol": "{{baseProtocol}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"airlines",
+						"{{airline_id}}",
+						"airports",
+						"5932764a-8586-4b62-94dd-86b39972472a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Airports associated to Airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"name\": \"Name\",\n    \"code\": \"nam\",\n    \"country\": \"Colombia\",\n    \"city\": \"Pereira\",\n    \"id\": \"904f9e17-8aa1-4fc1-9ca0-104327c33fc7\"\n},\n{\n    \"name\": \"Name\",\n    \"code\": \"name\",\n    \"country\": \"Colombia\",\n    \"city\": \"Pereira\",\n       \"id\": \"c4770d35-0716-4ae3-ad29-57f2053a4848\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseProtocol}}://{{baseURL}}:{{basePort}}/api/{{apiVersion}}/airlines/{{airline_id}}/airports",
+					"protocol": "{{baseProtocol}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"airlines",
+						"{{airline_id}}",
+						"airports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Airports to Airline with one unexisting airport",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The airport with id 904f9e17-8aa1-4fc1-9ca0-104327c33fc8 has not been found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"name\": \"Name\",\n    \"code\": \"nam\",\n    \"country\": \"Colombia\",\n    \"city\": \"Pereira\",\n    \"id\": \"904f9e17-8aa1-4fc1-9ca0-104327c33fc7\"\n},\n{\n    \"name\": \"Name\",\n    \"code\": \"name\",\n    \"country\": \"Colombia\",\n    \"city\": \"Pereira\",\n       \"id\": \"904f9e17-8aa1-4fc1-9ca0-104327c33fc8\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseProtocol}}://{{baseURL}}:{{basePort}}/api/{{apiVersion}}/airlines/{{airline_id}}/airports",
+					"protocol": "{{baseProtocol}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"airlines",
+						"{{airline_id}}",
+						"airports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Airpot from Airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseProtocol}}://{{baseURL}}:{{basePort}}/api/{{apiVersion}}/airlines/{{airline_id}}/airports/{{airport_id}}",
+					"protocol": "{{baseProtocol}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"airlines",
+						"{{airline_id}}",
+						"airports",
+						"{{airport_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Airport from Airline without association",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The airport with id a504f410-a8be-44b4-bb07-89944bc9a082 has not been found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseProtocol}}://{{baseURL}}:{{basePort}}/api/{{apiVersion}}/airlines/{{airline_id}}/airports/a504f410-a8be-44b4-bb07-89944bc9a082",
+					"protocol": "{{baseProtocol}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"airlines",
+						"{{airline_id}}",
+						"airports",
+						"a504f410-a8be-44b4-bb07-89944bc9a082"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
